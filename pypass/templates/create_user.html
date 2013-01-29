@@ -1,0 +1,17 @@
+<html>
+<body>
+{% if user %}
+    <ul>
+        <li>username -> {{ user.username }}</li>
+        <li>domain -> {{ user.domain }}</li>
+    </ul>
+    <img src='{{ url_for('barcode_img', username=user.username) }}'>
+{% else %}
+    <form method='POST' action='.'>
+      username:<input type='text' name='username'><br />
+      password:<input type='text' name='password'><br />
+      <button type='submit'>create user</button>
+    </form>
+{% endif %}
+</body>
+</html>
