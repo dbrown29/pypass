@@ -1,11 +1,11 @@
-from passlib.hash import bcrypt, sha256_crypt
+from passlib.hash import bcrypt
 import googauth
 
 from pypass import db, domain
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
+    username = db.Column(db.String, unique=True)
     domain = db.Column(db.String)
     pass_hash = db.Column(db.String)
     secret_key = db.Column(db.String)
@@ -22,6 +22,7 @@ class User(db.Model):
         self.username = username
         self.pass_hash = bcrypt.encrypt(password)
         self.secret_key = googauth.generate_secret_key()
+        # this will eventually be submitted by the admin in a config file
         self.domain = 'pass.run107.com'
 
     def __repr__(self):
