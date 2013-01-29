@@ -3,9 +3,11 @@ Flask-SQLAlchemy==0.16
 Jinja2==2.6
 SQLAlchemy==0.8.0b2
 Werkzeug==0.8.3
+argparse==1.2.1
 ipdb==0.7
 ipython==0.13.1
 passlib==1.6.1
 py-bcrypt==0.2
 python-googauth==0.1.0
+qrcode==2.4.2
 wsgiref==0.1.2
