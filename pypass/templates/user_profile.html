@@ -2,8 +2,8 @@
 <body>
 <ul>
     <li>username -> {{ user.username }}</li>
-    <li>pass_hash -> {{ user.pass_hash }}</li>
+    <li>password -> {{ user.password }}</li>
 </ul>
-<img src='{{ url_for('barcode_img', username=user.username) }}'>
+<img src='{{ url_for('barcode') }}'>
 </body>
 </html>
