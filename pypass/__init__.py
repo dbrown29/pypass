@@ -15,4 +15,5 @@ lm.setup_app(app)
 domain = 'pass.exit107.com'
 
 # routes
-import pypass.auth
+from pypass.routes import auth
+from pypass.routes import passdb

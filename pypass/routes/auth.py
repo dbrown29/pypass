@@ -1,6 +1,4 @@
-from __future__ import division
 from flask import abort, request, session, url_for, render_template, redirect, send_file
-import StringIO
 from sqlalchemy.orm.exc import NoResultFound
 from flask.ext.login import login_user, logout_user, current_user, login_required
 
@@ -65,7 +63,4 @@ def profile(username):
 @app.route('/barcode/')
 @login_required
 def barcode():
-    barcode = StringIO.StringIO()
-    current_user.qrcode.save(barcode)
-    barcode.seek(0)
-    return send_file(barcode)
+    return send_file(current_user.qrcode)

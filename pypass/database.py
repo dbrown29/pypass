@@ -1,7 +1,9 @@
+from __future__ import division
 from passlib.hash import bcrypt
 import googauth
 import qrcode
 import time
+import StringIO
 from flask.ext.login import UserMixin
 
 from pypass import db, domain
@@ -15,8 +17,9 @@ class User(db.Model, UserMixin):
 
     @property
     def qrcode(self):
-        '''returns a PIL image object containing 
-        a qrcode for use in google authenticator'''
+        '''returns a stringio object containing
+        the PNG qrcode for use in google authenticator
+        '''
         qr = qrcode.QRCode(
               box_size=5,
               border=4,
@@ -28,7 +31,10 @@ class User(db.Model, UserMixin):
                                 )
                             )
         qr.make(fit=True)
-        return qr.make_image()
+        barcode = StringIO.StringIO()
+        qr.make_image().save(barcode)
+        barcode.seek(0)
+        return barcode
 
     def verify_pass(self, password):
         return bcrypt.verify(password, self.password)
