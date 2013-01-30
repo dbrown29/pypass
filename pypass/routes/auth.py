@@ -26,7 +26,7 @@ def login():
         # verify code and password, then login user
         if user.verify_otp(otpass) and user.verify_pass(password):
             login_user(user)
-            return redirect(url_for('profile', username=user.username))
+            return redirect(url_for('profile'))
 
     return render_template('login.html', form=form)
 
@@ -47,20 +47,12 @@ def create_user():
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return redirect(url_for('profile', username=user.username))
+        return redirect(url_for('profile'))
 
     return render_template('create_user.html', form=form)
 
-@app.route('/profile/<username>/')
+@app.route('/profile/')
 @login_required
-def profile(username):
-    try:
-        user = User.query.filter(User.username==username).one()
-    except NoResultFound:
-        abort(404)
-    return render_template('user_profile.html', user=user)
-
-@app.route('/barcode/')
-@login_required
-def barcode():
-    return send_file(current_user.qrcode)
+def profile():
+    barcode = current_user.qrcode.read().encode('base64')
+    return render_template('user_profile.html', user=current_user, barcode=barcode)
