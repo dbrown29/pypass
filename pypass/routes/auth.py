@@ -54,5 +54,7 @@ def create_user():
 @app.route('/profile/')
 @login_required
 def profile():
+    # encode the image in base64 for use in the data-uri on
+    # the profile page
     barcode = current_user.qrcode.read().encode('base64')
     return render_template('user_profile.html', user=current_user, barcode=barcode)
