@@ -1,6 +1,7 @@
 from flask import abort, request, session, url_for, render_template, redirect, send_file
 from sqlalchemy.orm.exc import NoResultFound
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from passlib.hash import bcrypt
 
 from pypass import app, db, lm
 from pypass.database import User

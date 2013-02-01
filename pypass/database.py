@@ -3,6 +3,7 @@ from passlib.hash import bcrypt
 import googauth
 import qrcode
 import time
+from datetime import datetime
 import StringIO
 from flask.ext.login import UserMixin
 
@@ -53,3 +54,27 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User: {}>'.format(self.username)
+
+class Credential(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    username = db.Column(db.String)
+    password = db.Column(db.String)
+    url = db.Column(db.String)
+    notes = db.Column(db.Text)
+    created = db.Column(db.DateTime)
+    modified = db.Column(db.DateTime)
+
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner = db.relationship('User',
+                backref=db.backref('credentials', lazy='dynamic'))
+
+    def __init__(self, title, username, password, owner):
+        self.title = title
+        self.username = username
+        self.password = password
+        self.modified = datetime.today()
+        self.owner = owner
+
+    def __repr__(self):
+        return '<Credential: {0} @ {1}>'.format(self.title, self.modified)
