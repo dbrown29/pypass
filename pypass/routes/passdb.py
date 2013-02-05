@@ -22,7 +22,7 @@ def create_entry():
                   )
            db.session.add(entry)
            db.session.commit()
-           redirect(url_for('list_entry'))
+           return redirect(url_for('list_entry'))
 
     return render_template('create_entry.html', form=form)
 
