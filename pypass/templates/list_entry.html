@@ -1,5 +1,9 @@
-{% for entry in entries %}
-    {{ entry.title }}<br />
-    {{ entry.username }}<br />
-    {{ entry.password }}<br />
-{% endfor %}
+{% extends 'base.html' %}
+{% block title %}{{ super() }} - credentials {% endblock %}
+{% block content %}
+    {% for entry in entries %}
+        {{ entry.title }}<br />
+        {{ entry.username }}<br />
+        {{ entry.password }}<br />
+    {% endfor %}
+{% endblock %}

@@ -1,5 +1,6 @@
-<html>
-<body>
+{% extends 'base.html' %}
+{% block title %}{{ super() }} - login {% endblock %}
+{% block content %}
 <form method='POST' action='.'>
   {{ form.csrf_token }}
   {{ form.username.label }} {{ form.username }}<br />
@@ -7,5 +8,4 @@
   {{ form.otpass.label }} {{ form.otpass }}<br />
   <button type='submit'>check it</button>
 </form>
-</body>
-</html>
+{% endblock %}
