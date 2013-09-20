@@ -43,8 +43,9 @@ def create_user():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
+        domain = app.config['DOMAIN']
 
-        user = User(username=username, password=password)
+        user = User(username=username, domain=domain, password=password)
         db.session.add(user)
         db.session.commit()
         login_user(user)

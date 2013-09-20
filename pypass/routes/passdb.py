@@ -14,9 +14,11 @@ def create_entry():
            title = form.title.data
            username = form.username.data
            password = form.password.data
+           domain = app.config['DOMAIN']
            entry = Credential(
                       title=title, 
                       username=username,
+                      domain=domain,
                       password=password,
                       owner=current_user,
                   )

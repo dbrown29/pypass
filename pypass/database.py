@@ -7,7 +7,7 @@ from datetime import datetime
 import StringIO
 from flask.ext.login import UserMixin
 
-from pypass import db, domain
+from pypass import db
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,12 +45,11 @@ class User(db.Model, UserMixin):
         check_time = googauth.verify_time_based(self.secret_key, otpass)
         return (ref_time == check_time)
 
-    def __init__(self, username, password):
+    def __init__(self, username, domain, password):
         self.username = username
+        self.domain = domain
         self.password = bcrypt.encrypt(password)
         self.secret_key = googauth.generate_secret_key()
-        # this will eventually be submitted by the admin in a config file
-        self.domain = 'pass.run107.com'
 
     def __repr__(self):
         return '<User: {}>'.format(self.username)
