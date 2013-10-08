@@ -74,6 +74,8 @@ class Credential(db.Model):
         self.password = password
         self.modified = datetime.today()
         self.owner = owner
+        if not self.created:
+            self.created = self.modified
 
     def __repr__(self):
         return '<Credential: {0} @ {1}>'.format(self.title, self.modified)
