@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}{{ super() }} - user profile {% endblock %}
 {% block content %}
-    <ul>
-        <li>username -> {{ user.username }}</li>
-        <li>password -> {{ user.password }}</li>
-    </ul>
-    <img src='data:image/png;base64,{{ barcode }}' alt='use this to add the user to google authenticator'>
+    <div class="pure-g-r">
+        <div class="pure-u-2-5">
+            <h3>{{ user.username }}</h3>
+            <p>some stuff here</p>
+        </div>
+        <div class="pure-u-3-5">
+            <img src='data:image/png;base64,{{ barcode }}' alt='use this to add the user to google authenticator'>
+            <p>QR Code for Google Authenticator</h3>
+        </div>
+    </div>
 {% endblock %}
