@@ -8,36 +8,43 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{% block title %}passwords{% endblock %}</title>
         <meta name="description" content="password storage application">
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-        <link rel="stylesheet" href="/static/css/normalize.css">
-        <link rel="stylesheet" href="/static/css/main.css">
         <link rel="stylesheet" href="/static/css/base.css">
-        <script src="/static/js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <header>
-            {% block header %}
-            {% endblock %}
-        </header>
-        <div id='content'>
-            {% block content %}
-            {% endblock %}
-        </div>
-        <footer>
-            {% block footer %}
-            {% endblock %}
-        </footer>
+        <div class="pure-g-r">
+            <!-- sidebar menu -->
+            <div class="pure-u" id="menu">
+                <div class="pure-menu pure-menu-open pure-menu-vertical">
+                    <a class="pure-menu-heading" href="#">pypass</a>
+                    <ul>
+                        <li><a href="{{ url_for('create_user') }}">create user</a></li>
+                    {% if current_user.is_authenticated() %}
+                        <li><a href="{{ url_for('create_entry') }}">create entry</a></li>
+                        <li><a href="{{ url_for('list_entries') }}">list entries</a></li>
+                        <li><a href="{{ url_for('profile') }}">user profile</a></li>
+                        <li><a href="{{ url_for('logout') }}">logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">login</a></li>
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <!-- end sidebar menu -->
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
-        <script src="/static/js/plugins.js"></script>
-        <script src="/static/js/main.js"></script>
+            <!-- main content-->
+            <div id="content" class="pure-u-1">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <!-- end main content-->
+        </div>
+
     </body>
 </html>

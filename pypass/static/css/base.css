@@ -1,4 +1,15 @@
-body {
-    max-width: 960px;
-    margin: 0 auto;
-    }
+
+#menu {
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    margin-left: -150px;
+    width: 150px;
+    position: fixed;
+    left: 150px;
+
+}
+
+#content {
+    margin-left: 155px;
+}
