@@ -4,14 +4,13 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from passlib.hash import bcrypt
 
 from pypass import app, db, lm
-from pypass.database import User
-from pypass.forms import LoginForm, CreateUserForm
+from pypass.database import User, Credential
+from pypass.forms import LoginForm, CreateUserForm, CreateEntryForm
 
 @lm.user_loader
 def load_user(userid):
     return User.query.get(userid)
 
-@app.route('/login/', methods=['POST','GET'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -31,13 +30,11 @@ def login():
 
     return render_template('login.html', form=form)
 
-@app.route('/logout/')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route('/create/', methods=['POST','GET'])
 def create_user():
     form = CreateUserForm()
     if form.validate_on_submit():
@@ -53,10 +50,14 @@ def create_user():
 
     return render_template('create_user.html', form=form)
 
-@app.route('/profile/')
 @login_required
 def profile():
     # encode the image in base64 for use in the data-uri on
     # the profile page
     barcode = current_user.qrcode.read().encode('base64')
     return render_template('user_profile.html', user=current_user, barcode=barcode)
+
+app.add_url_rule('/login/', 'login', login, methods=['POST','GET'])
+app.add_url_rule('/create/', 'create_user', create_user, methods=['POST','GET'])
+app.add_url_rule('/logout/', 'logout', logout)
+app.add_url_rule('/profile/', 'profile', profile)
